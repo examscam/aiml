@@ -1,0 +1,53 @@
+# Import necessary libraries
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+# Load the Iris dataset
+iris = load_iris()
+
+# Print dataset keys for reference
+print("Dataset keys:", iris.keys())
+
+# Convert data to DataFrame for better visualization
+df = pd.DataFrame(iris['data'], columns=iris['feature_names'])
+print("Feature Data:\n", df.head())  # Display first few rows of feature data
+
+# Target names and feature names for reference
+print("Target names:", iris['target_names'])
+print("Feature names:", iris['feature_names'])
+
+# Display target values (species labels)
+print("Target array:\n", iris['target'])
+
+# Define features (X) and target labels (y)
+X = df
+y = iris['target']
+
+# Split the dataset into training and testing sets (67% train, 33% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+
+# Initialize and train the k-NN classifier with k=3
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = knn.predict(X_test)
+
+# Generate and print the confusion matrix on test data
+cm_test = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix (Test Data):\n", cm_test)
+
+# Calculate and print accuracy on test data
+accuracy_test = accuracy_score(y_test, y_pred)
+print("Correct prediction on test data:", accuracy_test)
+print("Wrong prediction on test data:", 1 - accuracy_test)
+
+# Predict on the training set to observe training performance
+y_train_pred = knn.predict(X_train)
+
+# Generate and print the confusion matrix on training data
+cm_train = confusion_matrix(y_train, y_train_pred)
+print("Confusion Matrix (Training Data):\n", cm_train)

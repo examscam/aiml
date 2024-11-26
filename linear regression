@@ -1,0 +1,91 @@
+
+# Import necessary libraries
+import numpy as np      # For numerical computations
+import pandas as pd     # For handling the dataset
+import matplotlib.pyplot as plt  # For plotting graphs
+
+# Step 1: Load the dataset
+dataset = pd.read_csv('Salary_Data.csv')  # Assume the file is named 'Salary_Data.csv'
+dataset.head()  # To view the first few rows of the dataset (optional)
+
+# Step 2: Data Preprocessing
+# Extract independent variable (Years of experience) and dependent variable (Salary)
+X = dataset.iloc[:, :-1].values  # All rows, all columns except the last one (Years of Experience)
+y = dataset.iloc[:, 1].values    # All rows, only the second column (Salary)
+
+# Step 3: Split the dataset into training and test sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=0)
+
+# Step 4: Train the Linear Regression model
+from sklearn.linear_model import LinearRegression
+regressor = LinearRegression()  # Create the Linear Regression model
+regressor.fit(X_train, y_train)  # Train the model on the training data (finds the best-fit line)
+
+# Step 5: Predict the salaries for the test set
+y_pred = regressor.predict(X_test)  # Predicting salaries for test set
+print("Predicted Salaries:", y_pred)  # Optional: Print predicted salaries
+print("Actual Salaries:", y_test)     # Optional: Print actual salaries for comparison
+
+# Step 6: Visualize the results
+# Plot for the training set
+plt.scatter(X_train, y_train, color='red')  # Actual data points (training set)
+plt.plot(X_train, regressor.predict(X_train), color='blue')  # Regression line (predicted)
+plt.title("Salary vs Experience (Training Set)")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.show()  # Display the plot
+
+# Plot for the test set
+plt.scatter(X_test, y_test, color='red')  # Actual data points (test set)
+plt.plot(X_train, regressor.predict(X_train))  # The same regression line (from training)
+plt.title("Salary vs Experience (Test Set)")
+plt.xlabel("Years of Experience")
+plt.ylabel("Salary")
+plt.show()  # Display the plot
+
+
+
+
+
+
+
+
+
+ import numpy as np
+ import pandas as pd
+ import matplotlib.pyplot as plt
+ import pandas as pd
+ # Data with 3 values
+ data = {
+    'Size': [6, 10, 14],
+    'Cost': [100, 200, 300]
+ }
+ # Create DataFrame
+ df = pd.DataFrame(data)
+ # Save to CSV
+ df.to_csv('pizza.csv', index=False)
+ dataset=pd.read_csv('pizza.csv')
+ dataset.head()
+ X=dataset.iloc[:,0:-1].values
+ y=dataset.iloc[:,1].values
+ X
+ from sklearn.model_selection import train_test_split
+ X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=1/3,random_state=0)
+ X_train
+ from sklearn.linear_model import LinearRegression 
+regressor = LinearRegression()
+ regressor.fit(X_train,y_train)
+#  regressor
+#  regressor.predict([[30]])
+ y_pred=regressor.predict(X_test)
+#  y_pred
+ df1=pd.DataFrame({'Actual':y_test,'Prediction':y_pred})
+#  df1
+ regressor.score(X_test,y_test)
+ plt.scatter(X_train,y_train ,color='red')
+ plt.plot(X_train,regressor.predict(X_train),color='black')
+ plt.title("size vs cost( Training set) ")
+ plt.xlabel("size")
+ plt.ylabel("cost")
+ plt.show()
